@@ -1,0 +1,197 @@
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="center">
+  <div fxFlex.sm="40" fxFlex.gt-sm="30" class="p-1">
+    <mat-card>
+      <div class="product-image-container mb-0">
+        <app-product-image
+          [url]="currentImgUrl || product.image?.[0]"
+        ></app-product-image>
+      </div>
+
+      <div fxLayoutAlign="center">
+        <button
+          mat-button
+          *ngFor="let image of product.image"
+          style="margin-right: 0.5rem"
+          (click)="currentImgUrl = image"
+        >
+          <img width="50" [src]="image" alt="" />
+        </button>
+      </div>
+    </mat-card>
+  </div>
+
+  <div
+    fxFlex.sm="60"
+    fxFlex.gt-sm="{{ 75 / 2 }}"
+    fxLayout="row wrap"
+    fxLayoutAlign="center start"
+  >
+    <div fxFlex="100" class="p-1">
+      <mat-card>
+        <mat-card-title>{{ product.name }}</mat-card-title>
+
+        <mat-card-subtitle class="mb-0">
+          <p
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            style="padding: 0.5rem 0"
+            class="mb-0"
+          >
+            <app-rating [rating]="product.rating"></app-rating>
+            <span style="margin: auto 0.2rem">
+              ( {{ product.numReviews }} Reviews )
+            </span>
+          </p>
+        </mat-card-subtitle>
+
+        <p style="font-size: 16px; margin-bottom: 0.2rem">
+          <span class="mat-body-2 mb-0">Price :</span>
+          <span style="margin: 0 0.1rem">
+            {{ product.price | currency: "INR" }}
+          </span>
+        </p>
+        <p>
+          <span class="mat-body-2 mb-0">Brand : </span>
+          <span style="margin: 0 0.1rem">{{ product.brand?.name }}</span>
+        </p>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-content style="margin-top: 1.5rem">
+          <p class="mat-body-2 mb-0">Description :</p>
+          <p>{{ product.description }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div fxFlex.sm="70" fxFlex.md="70" fxFlex.gt-md="50" class="p-1">
+      <mat-card>
+        <mat-card-content fxLayout="row wrap">
+          <div fxFlex="40" fxLayoutAlign="start center">
+            <p class="mb-0">Price</p>
+          </div>
+          <div fxFlex="60" fxLayoutAlign="start center">
+            <p class="mat-title mb-0">
+              {{ product.price | currency: "INR" }}
+            </p>
+          </div>
+
+          <div fxFlex="40" fxLayoutAlign="start center">
+            <p class="">Status</p>
+          </div>
+          <div fxFlex="60" fxLayoutAlign="start center">
+            <p
+              [style]="{
+                color: product.countInStock ? 'green' : 'red',
+                fontSize: '18px'
+              }"
+              class="mat-title mat-primary"
+            >
+              {{
+                (product.countInStock ? "in stock" : "out of stock") | titlecase
+              }}
+            </p>
+          </div>
+
+          <div fxFlex="40" fxLayoutAlign="start center">
+            <p class="mb-0">Qty</p>
+          </div>
+          <div fxFlex="60" fxLayoutAlign="start center">
+            <mat-select value="1">
+              <mat-option value="1">1</mat-option>
+              <mat-option
+                *ngFor="let state of getCount(product.countInStock); index as i"
+                [value]="i + 1"
+              >
+                {{ i + 1 }}
+              </mat-option>
+            </mat-select>
+          </div>
+        </mat-card-content>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            style="width: 100%"
+            color="accent"
+            disabled="{{ !product.countInStock }}"
+          >
+            Add To Cart
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div class="p-1" fxLayout="row wrap" fxLayoutAlign="center">
+  <div fxFlex.gt-sm="40" fxFlex.sm="55" fxFlex.xs="100">
+    <h5 class="mat-headline">Reviews</h5>
+
+    <app-product-review
+      *ngFor="let review of product.reviews"
+      [review]="review"
+      [reviewId]="reviewId"
+      (deleteReview)="deleteReview()"
+    ></app-product-review>
+
+    <mat-card style="margin-top: 0.5rem">
+      <h3>Write a Customer Review</h3>
+
+      <form
+        *ngIf="!this.isReviewed; else alreadyReviewed"
+        [formGroup]="ratingForm"
+        (ngSubmit)="submitRating()"
+      >
+        <mat-card-content fxLayout="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a Rating</mat-label>
+            <mat-select formControlName="rating">
+              <mat-option *ngFor="let rating of ratings" [value]="rating.value">
+                {{ rating.content }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Leave a comment</mat-label>
+            <textarea
+              matInput
+              formControlName="comment"
+              placeholder="Ex. It makes me feel..."
+            ></textarea>
+          </mat-form-field>
+        </mat-card-content>
+
+        <mat-card-actions style="padding: 0 0.5rem; margin-top: 0.5rem">
+          <button
+            mat-raised-button
+            type="submit"
+            color="primary"
+            [disabled]="!ratingForm.valid"
+          >
+            Submit
+          </button>
+        </mat-card-actions>
+      </form>
+
+      <ng-template #alreadyReviewed>
+        <h1 mat-button>Your already review the product</h1>
+      </ng-template>
+    </mat-card>
+  </div>
+</div>
+
+<div style="margin-top: 1rem">
+  <h5 class="mat-headline mb-0">Similar Products</h5>
+  <owl-carousel-o [options]="customOptions" fxLayoutAlign="center center">
+    <ng-template
+      carouselSlide
+      *ngFor="let product of _productService.products.slice(0, 10)"
+    >
+      <app-product [product]="product"></app-product>
+    </ng-template>
+  </owl-carousel-o>
+</div>

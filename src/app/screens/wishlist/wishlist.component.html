@@ -1,0 +1,21 @@
+<div fxLayout="row wrap" fxLayout.xs="column">
+  <app-product
+    fxFlex.lt-sm="{{ 100 / 1 }}"
+    fxFlex.sm="{{ 100 / 2 }}"
+    fxFlex.md="{{ 100 / 4 }}"
+    fxFlex.gt-md="{{ 100 / 5 }}"
+    *ngFor="let product of _wishlistService.wishlistObj | keyvalue"
+    [product]="product.value"
+    (removeToWishList)="removeToWishList(product.key)"
+  ></app-product>
+
+  <div
+    *ngIf="!_wishlistService.wishlistLength"
+    fxLayoutAlign="center"
+    style="width: 100%"
+  >
+    <p style="width: fit-content">
+      Wishlist is empty. <a routerLink="/home">Go Home</a>
+    </p>
+  </div>
+</div>

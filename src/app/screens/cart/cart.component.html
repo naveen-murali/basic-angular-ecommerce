@@ -1,0 +1,37 @@
+<div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center">
+  <ng-container *ngIf="_cartService.cartCount; else emptyCart">
+    <div fxFlex.gt-md="22" fxFlex.md="32" fxFlex.lt-md="50" class="p-1">
+      <app-cart-card
+        *ngFor="let item of _cartService.cart.cartItems"
+        [item]="item"
+      ></app-cart-card>
+    </div>
+    <div fxFlex.gt-md="22" fxFlex.md="32" fxFlex.lt-md="50" class="p-1">
+      <mat-card>
+        <div fxLayout="row wrap">
+          <div fxFlex="40" fxLayoutAlign="start center">
+            <p class="mb-0">Price</p>
+          </div>
+          <div fxFlex="60" fxLayoutAlign="start center">
+            <p class="mat-title mb-0">
+              {{ cart.price | currency: "INR" }}
+            </p>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-actions>
+          <button mat-raised-button style="width: 100%" color="accent">
+            Checkout
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </ng-container>
+  <ng-template #emptyCart>
+    <p style="width: fit-content">
+      Cart is empty. <a routerLink="/home">Go Home</a>
+    </p>
+  </ng-template>
+</div>

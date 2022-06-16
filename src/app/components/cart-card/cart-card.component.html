@@ -1,0 +1,33 @@
+<mat-card style="margin-bottom: 0.5rem">
+  <mat-card-content fxLayout="row" fxLayoutAlign="start center">
+    <img mat-card-sm-image [src]="item.product.image[0]" />
+
+    <div style="width: 100%; padding: 0 1rem">
+      <h2 class="mb-0">{{ item.product.name }}</h2>
+      <p class="mb-0">
+        <app-rating [rating]="item.product.rating"></app-rating>
+      </p>
+      <p class="mb-0" style="margin-top: 0.5rem">
+        {{ item.price | currency: "INR" }} ( x {{ item.quantity }} )
+      </p>
+    </div>
+  </mat-card-content>
+
+  <div fxLayout="row" style="width: 100%" fxLayoutAlign="space-between">
+    <div style="width: 100%">
+      <mat-card-subtitle class="mb-0">Quantity:</mat-card-subtitle>
+      <mat-select [(value)]="quantity" (valueChange)="addToCart()">
+        <mat-option
+          *ngFor="let state of getCount(item.product.countInStock); index as i"
+          [value]="i + 1"
+        >
+          {{ i + 1 }}
+        </mat-option>
+      </mat-select>
+    </div>
+
+    <button mat-icon-button color="warn" (click)="removeFormCart()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</mat-card>

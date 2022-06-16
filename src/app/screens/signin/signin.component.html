@@ -1,0 +1,86 @@
+<div fxLayout="row wrap" fxLayoutAlign="center" style="width: 100%">
+  <mat-card
+    fxFlex.gt-md="30%"
+    fxFlex.md="40%"
+    fxFlex.sm="50%"
+    fxFlex.lt-sm="100%"
+  >
+    <form [formGroup]="signinForm" fxLayout="column" (ngSubmit)="onSubmit()">
+      <legend>
+        <h2>{{ "sign in" | titlecase }}</h2>
+      </legend>
+
+      <mat-card-subtitle
+        *ngIf="error"
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+        class="error-panal"
+      >
+        <span>{{ error | titlecase }}</span>
+
+        <span mat-icon-button style="cursor: pointer" (click)="error = ''">
+          <mat-icon style="font-size: 16px" fxLayoutAlign="center center">
+            close
+          </mat-icon>
+        </span>
+      </mat-card-subtitle>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input
+          type="email"
+          matInput
+          formControlName="email"
+          placeholder="Ex. pat@example.com"
+        />
+        <mat-error *ngIf="email && email.errors && email.errors['email']">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="email && email.errors && email.errors['required']">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input
+          type="password"
+          matInput
+          formControlName="password"
+          placeholder="Password"
+        />
+
+        <mat-error
+          *ngIf="password && password.errors && password.errors['minlength']"
+        >
+          Password should have min length of 6
+        </mat-error>
+        <mat-error
+          *ngIf="password && password.errors && password.errors['required']"
+        >
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-card-actions style="padding: 0 0.5rem; margin-top: 0.5rem">
+        <button
+          mat-raised-button
+          type="submit"
+          color="primary"
+          [disabled]="!signinForm.valid"
+        >
+          Submit
+        </button>
+      </mat-card-actions>
+    </form>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-subtitle>
+      <p style="margin-top: 1rem" fxLayout="row" fxLayoutAlign="center">
+        <span style="padding-right: 0.2rem"> New Customer? </span>
+        <a routerLink="/signup" class="signup-reroute">Register</a>
+      </p>
+    </mat-card-subtitle>
+  </mat-card>
+</div>

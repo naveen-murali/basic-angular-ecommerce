@@ -1,0 +1,15 @@
+.signup-reroute {
+  color: rgba(47, 47, 249, 0.723);
+  text-decoration: none;
+}
+
+.error-panal {
+  background-color: rgba(255, 0, 0, 0.525);
+  padding: 0.5rem !important;
+  border-radius: 0.2rem;
+  color: white;
+
+  span:nth-child(2) {
+    color: black !important;
+  }
+}

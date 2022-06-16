@@ -1,0 +1,11 @@
+<app-carousal></app-carousal>
+<div fxLayout="row wrap" fxLayout.xs="column">
+  <app-product
+    fxFlex.lt-sm="{{ 100 }}"
+    fxFlex.sm="{{ 100 / 2 }}"
+    fxFlex.md="{{ 100 / 4 }}"
+    fxFlex.gt-md="{{ 100 / 5 }}"
+    *ngFor="let product of productService.products"
+    [product]="product"
+  ></app-product>
+</div>

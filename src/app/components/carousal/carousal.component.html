@@ -1,0 +1,37 @@
+<owl-carousel-o [options]="customOptions" fxLayoutAlign="center center">
+  <ng-template carouselSlide *ngFor="let product of carousalData">
+    <div fxLayoutAlign="center">
+      <div
+        fxFlex.lt-sm="100"
+        fxFlex.lt-sm="100"
+        fxFlex.lt-md="40"
+        fxFlex.md="30"
+        fxFlex.gt-md="20"
+      >
+        <div style="padding: 0.5rem">
+          <mat-card class="product-card">
+            <a routerLink="/product/{{ product._id }}">
+              <app-product-image [url]="product.image[0]"></app-product-image>
+            </a>
+
+            <mat-card-subtitle>
+              <a routerLink="/product/{{ product._id }}" class="link-type">
+                {{ product.name }}
+              </a>
+            </mat-card-subtitle>
+
+            <mat-card-content class="mb-0">
+              <p class="mb-0" fxLayout="column">
+                <span>{{ product.price | currency: "INR" }}</span>
+                <span fxLayout="row" fxLayoutAlign="start center">
+                  <app-rating [rating]="product.rating"></app-rating>
+                  ({{ product.numReviews }} Reviews)
+                </span>
+              </p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</owl-carousel-o>

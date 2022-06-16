@@ -1,0 +1,20 @@
+.mat-card-image {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.product-card {
+  transform: scale(1);
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.in-sigle-line {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

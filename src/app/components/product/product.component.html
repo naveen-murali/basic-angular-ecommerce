@@ -1,0 +1,45 @@
+<div style="padding: 0.5rem">
+  <mat-card class="product-card">
+    <a routerLink="/product/{{ product._id }}">
+      <app-product-image [url]="product.image[0]"></app-product-image>
+    </a>
+
+    <mat-card-subtitle>
+      <a
+        routerLink="/product/{{ product._id }}"
+        class="link-type in-sigle-line"
+        [matTooltip]="product.name"
+      >
+        {{ product.name }}
+      </a>
+    </mat-card-subtitle>
+
+    <mat-card-content class="mb-0">
+      <p class="mb-0" fxLayout="column">
+        <span>{{ product.price | currency: "INR" }}</span>
+        <span fxLayout="row" fxLayoutAlign="start center">
+          <app-rating [rating]="product.rating"></app-rating>
+          ({{ product.numReviews }} Reviews)
+        </span>
+      </p>
+    </mat-card-content>
+
+    <mat-card-actions
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+      style="padding-top: 0"
+    >
+      <button mat-icon-button aria-label="cart icon" (click)="toWishList()">
+        <mat-icon
+          aria-label="cart icon"
+          [color]="isProductInWishList && 'primary'"
+        >
+          favorite
+        </mat-icon>
+      </button>
+      <button mat-icon-button aria-label="cart icon" (click)="addToCart()">
+        <mat-icon aria-label="cart icon"> shopping_cart </mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

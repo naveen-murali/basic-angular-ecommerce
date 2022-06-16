@@ -1,0 +1,37 @@
+<mat-card style="margin-top: 0.5rem">
+  <mat-card-subtitle class="mb-0" fxLayout="row" fxLayoutAlign="space-between">
+    <p
+      fxLayout="row wrap"
+      fxLayoutAlign="start center"
+      style="padding: 0.5rem 0"
+      class="p-0 mat-body-2"
+      [ngClass]="{ 'mb-0': !review.comment || canEdit }"
+    >
+      <span style="margin-right: 0.2rem">
+        {{ review.name | titlecase }}
+      </span>
+      <span fxLayout="row wrap" fxLayoutAlign="start center">
+        <app-rating [rating]="review.rating"></app-rating>
+        ( {{ review.rating }} )
+      </span>
+    </p>
+
+    <button
+      *ngIf="canEdit"
+      mat-icon-button
+      matTooltip="Delete review"
+      matTooltipPosition="left"
+      (click)="openDialog()"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-subtitle>
+
+  <mat-divider *ngIf="review.comment"></mat-divider>
+
+  <mat-card-content *ngIf="review.comment">
+    <p class="mb-0" style="padding-top: 0.5rem">
+      {{ review.comment }}
+    </p>
+  </mat-card-content>
+</mat-card>
