@@ -1,21 +1,21 @@
 <span fxLayout="row" fxLayoutAlign="star center">
-  <ng-container *ngFor="let percent of ratingPerc">
+  <ng-container *ngFor="let p of getStarCounts(); index as i">
     <span>
       <svg height="24" width="24">
         <defs>
-          <linearGradient [id]="percent.id" x1="0%" y1="0%" x2="100%" y2="0%">
+          <linearGradient [id]="getId(i)" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop
-              [attr.offset]="percent.percent"
+              [attr.offset]="getRating(i)"
               style="stop-color: rgb(255, 255, 0); stop-opacity: 1"
             />
             <stop
-              [attr.offset]="percent.percent"
+              [attr.offset]="getRating(i)"
               style="stop-color: rgba(255, 255, 255, 0.1); stop-opacity: 1"
             />
           </linearGradient>
         </defs>
         <path
-          [attr.fill]="percent.fill"
+          [attr.fill]="getFill(i)"
           d="M5.825 22 8.15 14.4 2 10H9.6L12 2L14.4 10H22L15.85 14.4L18.175 22L12 17.3Z"
         />
       </svg>

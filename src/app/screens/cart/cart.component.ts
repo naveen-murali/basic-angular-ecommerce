@@ -8,8 +8,6 @@ import { CartService } from 'src/app/services/cart/cart.service';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  public cart = {} as CartModel;
-
   constructor(public readonly _cartService: CartService) {}
 
   ngOnInit(): void {}

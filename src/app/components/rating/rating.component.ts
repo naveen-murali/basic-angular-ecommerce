@@ -7,44 +7,43 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class RatingComponent implements OnInit {
   @Input() public rating = 0 as number;
-  public ratingPerc = [] as { percent: string; id: string; fill: string }[];
+
+  // CURRENT BASE OF THE RATING IS GETTING FORM THE SERVER
+  public currentBase = 5;
+  // NEW BASE TO THE RATING TO BE CONVERTED
+  public newBase = 5;
+
+  public before = 0;
+  public after = 0;
 
   constructor() {}
 
   ngOnInit(): void {
-    const pos = [1, 2, 3, 4, 5];
+    this.rating = this.newBase
+      ? (this.rating / this.currentBase) * this.newBase
+      : this.rating;
 
-    this.ratingPerc = pos.reduce((acc, value) => {
-      const remainder = this.rating - value;
-      const percent =
-        remainder > 0
-          ? '100%'
-          : remainder > -1
-          ? `${(this.rating - (value - 1)) * 100}%`
-          : '0%';
-
-      const id = `${this.rating}${value}`;
-
-      acc.push({ percent, id, fill: `url(#${id})` });
-      return acc;
-    }, [] as { percent: string; id: string; fill: string }[]);
-
-    console.log({ p: this.ratingPerc, r: this.rating });
+    this.before = Math.floor(this.rating);
+    this.after = (this.rating % 1) * 100;
   }
 
-  getIconName = (starPosition: number) =>
-    this.rating >= starPosition
-      ? 'star'
-      : this.rating >= starPosition - 0.5
-      ? 'star_half'
-      : '';
+  getRating(position: number) {
+    return this.before > position
+      ? '100%'
+      : this.before === position
+      ? `${this.after}%`
+      : '0%';
+  }
 
-  getRating(starPosition: any) {
-    console.log(starPosition);
-    return starPosition;
+  getStarCounts() {
+    return new Array(this.newBase || this.currentBase);
   }
 
   getFill(i: number) {
-    return `url(#grad1+${i})`;
+    return `url(#${this.getId(i)})`;
+  }
+
+  getId(i: number) {
+    return `${this.rating}-${i}-ratingGradiant`;
   }
 }
